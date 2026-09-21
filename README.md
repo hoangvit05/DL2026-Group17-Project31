@@ -115,7 +115,7 @@ Thực nghiệm được thực hiện trên cùng một tập Test độc lập
 
 ```text
 Deep final/
-├── Lung Segmentation/                      # Thư mục dữ liệu gốc (2.403 files nguyên vẹn)
+├── Lung Segmentation/                      # Thư mục dữ liệu gốc (2.403 files chuẩn NIH)
 │   ├── CXR_png/                            # Ảnh X-quang gốc (800 ảnh)
 │   ├── masks/                              # Mặt nạ nhãn phổi (704 masks)
 │   ├── test/                               # 96 ảnh test cuộc thi gốc
@@ -123,9 +123,12 @@ Deep final/
 │   ├── NLM-ChinaCXRSet-ReadMe.docx         # Tài liệu NIH
 │   └── NLM-MontgomeryCXRSet-ReadMe.pdf     # Tài liệu NIH
 ├── notebooks/
-│   └── lung_segmentation_colab.ipynb        # NOTEBOOK CHÍNH: Chạy trọn gói trên Google Colab
-├── chest-xray-masks-and-labels.zip         # File zip gốc tải từ Kaggle
-└── README.md                               # Tài liệu hướng dẫn đồ án
+│   └── lung_segmentation_colab.ipynb       # Notebook chính chạy trên Colab (đã kèm Output)
+├── data_scaling_benchmark_results.csv       # Bảng số liệu thực nghiệm (Dice & IoU)
+├── data_scaling_comparison.png             # Biểu đồ đường cong Data Scaling Curves
+├── qualitative_comparison.png              # Ảnh trực quan hóa kết quả phân vùng thực tế
+├── .gitignore                              # Cấu hình loại trừ file nặng khi push Git
+└── README.md                               # Tài liệu báo cáo & hướng dẫn đồ án
 ```
 
 ---
