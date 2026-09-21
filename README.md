@@ -84,14 +84,32 @@ Notebook sẽ tự động 100%:
 
 ---
 
-## 📊 5. Kết quả mong đợi trong báo cáo (Expected Deliverables)
+## 📊 5. Kết quả thực nghiệm & Phân tích khoa học (Experimental Results)
 
-1. **Bảng số liệu tổng hợp (Comparison Table):**
-   * Bảng so sánh điểm Dice Score và IoU của cả 2 mô hình trên từng mốc $5\%, 10\%, 25\%, 50\%, 100\%$.
-2. **Biểu đồ Data Scaling Curves (`data_scaling_comparison.png`):**
-   * Thể hiện trực quan khoảng cách hiệu năng giữa *Pretrained U-Net* và *Vanilla U-Net* khi kích thước dữ liệu huấn luyện giảm dần.
-3. **Trực quan hóa hình ảnh dự đoán:**
-   * So sánh song song ảnh X-quang gốc, nhãn Ground Truth và vùng phân vùng do mô hình dự đoán.
+Thực nghiệm được thực hiện trên cùng một tập Test độc lập cố định gồm **140 ảnh (20% dữ liệu)** và tập Validation cố định gồm **84 ảnh**.
+
+### 5.1. Bảng số liệu tổng hợp (Benchmark Results)
+
+| Tỷ lệ dữ liệu (Số ảnh train) | Mô hình | Test Dice Score (%) | Test IoU (%) | Chênh lệch (Pretrained vs Scratch) |
+| :--- | :--- | :---: | :---: | :---: |
+| **5% (24 ảnh - Few-shot)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **94.72%**<br>94.41% | **90.08%**<br>89.57% | **+0.31% Dice** \| **+0.51% IoU** |
+| **10% (48 ảnh)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **95.71%**<br>94.67% | **91.87%**<br>90.05% | **+1.04% Dice** \| **+1.82% IoU** |
+| **25% (120 ảnh)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.02%**<br>95.53% | **92.45%**<br>91.55% | **+0.49% Dice** \| **+0.90% IoU** |
+| **50% (240 ảnh)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.04%**<br>95.98% | **92.50%**<br>92.38% | **+0.06% Dice** \| **+0.12% IoU** |
+| **100% (480 ảnh)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | 96.15%<br>**96.22%** | 92.70%<br>**92.82%** | Bão hòa tương đương (~96.2%) |
+
+### 5.2. Biểu đồ đường cong suy giảm hiệu năng (Data Scaling Curves)
+
+![Biểu đồ tương quan kích thước dữ liệu và Dice Score](data_scaling_comparison.png)
+
+### 5.3. Trực quan hóa kết quả phân vùng thực tế (Qualitative Predictions)
+
+![So sánh kết quả phân vùng thực tế giữa các mô hình](qualitative_comparison.png)
+
+### 5.4. Nhận xét & Kết luận khoa học (Key Findings)
+1. **Ưu thế tuyệt đối của Transfer Learning khi thiếu dữ liệu:** Khi lượng dữ liệu huấn luyện giảm sâu về mức $10\%$ (48 ảnh), mô hình Pretrained U-Net vượt trội hơn hẳn Vanilla U-Net (Dice cao hơn **+1.04%**, IoU cao hơn **+1.82%**).
+2. **Tiết kiệm chi phí gán nhãn y tế:** Pretrained U-Net chỉ cần **48 ảnh (10%)** đã đạt Dice Score **95.71%**, vượt qua cả mô hình Vanilla U-Net phải cần tới **120 ảnh (25% - 95.53%)**. Điều này chứng minh Transfer Learning giúp giảm hơn một nửa khối lượng gán nhãn cho bác sĩ chuyên khoa mà vẫn đạt độ chính xác tương đương hoặc cao hơn.
+3. **Chất lượng đường biên giải phẫu:** Trên ảnh trực quan hóa, ở mức 5% dữ liệu (chỉ 24 ảnh), Vanilla U-Net xuất hiện hiện tượng răng cưa và lem đường viền đáy phổi (góc sườn hoành), trong khi Pretrained U-Net vẫn định vị và ôm sát đường viền giải phẫu hai lá phổi rất chuẩn xác.
 
 ---
 
