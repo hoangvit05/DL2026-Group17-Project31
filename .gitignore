@@ -1,0 +1,18 @@
+# Ignored large datasets & zip archives (do not push to GitHub)
+Lung Segmentation/
+*.zip
+
+# Checkpoints and weights
+*.pth
+*.pt
+checkpoints/
+
+# Python & Jupyter cache
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
