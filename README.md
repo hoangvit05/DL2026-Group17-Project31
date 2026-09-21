@@ -130,13 +130,3 @@ Deep final/
 ├── .gitignore                              # Cấu hình loại trừ file nặng khi push Git
 └── README.md                               # Tài liệu báo cáo & hướng dẫn đồ án
 ```
-
----
-
-## 👥 7. Thành viên nhóm & Phân công công việc (Team Members)
-
-| STT | Họ và tên | Mã sinh viên | Nhiệm vụ chính |
-| :-: | :--- | :---: | :--- |
-| 1 | *Nguyễn Văn A* | *XXXXXXXX* | Chuẩn bị dữ liệu, chạy kịch bản Data Scaling trên Colab |
-| 2 | *Trần Văn B* | *XXXXXXXX* | Xây dựng kiến trúc mô hình U-Net & Backbone ResNet-34 |
-| 3 | *Lê Văn C* | *XXXXXXXX* | Đánh giá chỉ số Dice/IoU, tổng hợp biểu đồ và viết báo cáo |
