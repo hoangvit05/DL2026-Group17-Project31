@@ -2,9 +2,7 @@
 ## Đề tài: Phân vùng Phổi trên ảnh X-quang với lượng dữ liệu huấn luyện hạn chế (Lung Segmentation on Google Colab)
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Dao-Trung-Hieu-2912/Deep-Learning/blob/main/notebooks/lung_segmentation_colab.ipynb)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/Dao-Trung-Hieu-2912/Deep-Learning)
 
-> **GitHub Repository:** [https://github.com/Dao-Trung-Hieu-2912/Deep-Learning](https://github.com/Dao-Trung-Hieu-2912/Deep-Learning)  
 > **Môn học:** Deep Learning (Học sâu)  
 > **Lĩnh vực:** Computer Vision / Medical AI  
 > **Đối tượng giải phẫu:** Hai lá phổi (Left Lung & Right Lung) trên ảnh X-quang lồng ngực (CXR)  
