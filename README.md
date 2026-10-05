@@ -1,8 +1,6 @@
 # Medical Image Segmentation with Limited Training Data
 ## Đề tài: Phân vùng Phổi trên ảnh X-quang với lượng dữ liệu huấn luyện hạn chế (Lung Segmentation on Google Colab)
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Dao-Trung-Hieu-2912/Deep-Learning/blob/main/notebooks/lung_segmentation_colab.ipynb)
-
 > **Môn học:** Deep Learning (Học sâu)  
 > **Lĩnh vực:** Computer Vision / Medical AI  
 > **Đối tượng giải phẫu:** Hai lá phổi (Left Lung & Right Lung) trên ảnh X-quang lồng ngực (CXR)  
@@ -19,7 +17,7 @@ Dự án này tập trung nghiên cứu, phát triển và đánh giá các gi�
 ### Mục tiêu khoa học:
 1. **Khảo sát kiến trúc mô hình:** So sánh hiệu năng giữa mô hình phân vùng truyền thống huấn luyện từ đầu (*Conventional / Scratch*: Vanilla U-Net) với mô hình sử dụng bộ mã hóa tiền huấn luyện (*Pretrained Backbone*: U-Net + ResNet-34).
 2. **Nghiên cứu suy giảm hiệu năng theo kích thước dữ liệu (Data Scaling Study):** Khảo sát đường cong hiệu năng khi giảm dần tập dữ liệu huấn luyện theo các mốc: **$5\%, 10\%, 25\%, 50\%, 100\%$**.
-3. **Đánh giá sức bền của mô hình (Generalization & Robustness):** Khảo sát xem mô hình Pretrained duy trì độ chính xác và khả năng bảo toàn hình thái giải phẫu tốt hơn như thế nào khi lượng dữ liệu huấn luyện giảm sâu.
+3. **Đánh giá sức bền của mô hình (Generalization & Robustness):** Đánh giá và so sánh khả năng tổng quát hóa, mức độ duy trì độ chính xác và khả năng bảo toàn hình thái giải phẫu giữa mô hình phân vùng truyền thống (Conventional Vanilla U-Net) và mô hình tiền huấn luyện (Pretrained U-Net) khi lượng dữ liệu huấn luyện bị cắt giảm sâu.
 
 ---
 
@@ -35,25 +33,25 @@ Dự án sử dụng bộ dữ liệu chuẩn y khoa **Chest X-Ray Masks and Lab
 
 ---
 
-## 🚀 3. Hướng dẫn chạy trọn gói trên Google Colab (1-Click Run)
+## 🚀 3. Hướng dẫn chạy trên Google Colab 
 
 Toàn bộ quy trình từ tải dữ liệu, tiền xử lý, huấn luyện 10 mô hình thực nghiệm và vẽ biểu đồ so sánh đã được đóng gói hoàn chỉnh trong **duy nhất 1 file Jupyter Notebook**:
 
 📁 **[`notebooks/lung_segmentation_colab.ipynb`](notebooks/lung_segmentation_colab.ipynb)**
 
-### Quy trình thực hiện trên Colab (1-Click Run):
-
-File Notebook đã được **tích hợp sẵn API Token của bạn**, bạn **không cần upload thủ công bất kỳ file nào**:
+### Quy trình thực hiện trên Colab:
 
 1. **Mở Colab:** Truy cập [colab.research.google.com](https://colab.research.google.com/) $\rightarrow$ Chọn tab **Upload (Tải lên)** $\rightarrow$ Tải file [`notebooks/lung_segmentation_colab.ipynb`](notebooks/lung_segmentation_colab.ipynb) lên.
 2. **Bật GPU:** Vào menu **Runtime** $\rightarrow$ **Change runtime type** $\rightarrow$ Chọn **T4 GPU** $\rightarrow$ Bấm **Save**.
 3. **Bấm chạy toàn bộ:** Bấm menu **Runtime** $\rightarrow$ **Run all** (hoặc phím tắt `Ctrl + F9`).
 
-Notebook sẽ tự động 100%:
-* Xác thực API Kaggle bằng Token và tải dữ liệu siêu tốc (~50MB/s).
-* Tự động cài thư viện và tạo các tập phân chia ($5\%, 10\%, 25\%, 50\%, 100\%$).
-* Tự động huấn luyện chuỗi thí nghiệm đối chứng (Vanilla U-Net vs Pretrained U-Net).
-* Tự động xuất bảng điểm tổng hợp và vẽ biểu đồ khoa học `data_scaling_comparison.png`.
+### 📂 Các file kết quả đầu ra được tạo ra sau khi chạy xong:
+
+Sau khi hoàn tất quá trình chạy toàn bộ notebook, hệ thống sẽ tự động xuất ra 3 file kết quả cốt lõi:
+
+1. **`data_scaling_benchmark_results.csv`**: Bảng dữ liệu tổng hợp điểm số định lượng (Test Dice Score và Test IoU) của cả 2 mô hình (Vanilla U-Net & Pretrained U-Net) qua 5 mốc tỷ lệ dữ liệu ($5\%, 10\%, 25\%, 50\%, 100\%$).
+2. **`data_scaling_comparison.png`**: Biểu đồ đường cong khoa học (Data Scaling Curves) trực quan hóa tương quan giữa tỷ lệ dữ liệu huấn luyện và điểm Test Dice Score.
+3. **`qualitative_comparison.png`**: Ảnh ma trận trực quan hóa kết quả phân vùng thực tế (10 hàng $\times$ 7 cột) so sánh chi tiết giữa ảnh gốc, ground truth và kết quả dự đoán của 2 mô hình qua các mốc dữ liệu.
 
 ---
 
@@ -114,14 +112,7 @@ Thực nghiệm được thực hiện trên cùng một tập Test độc lập
 ## 📂 6. Cấu trúc thư mục dự án (Project Structure)
 
 ```text
-Deep final/
-├── Lung Segmentation/                      # Thư mục dữ liệu gốc (2.403 files chuẩn NIH)
-│   ├── CXR_png/                            # Ảnh X-quang gốc (800 ảnh)
-│   ├── masks/                              # Mặt nạ nhãn phổi (704 masks)
-│   ├── test/                               # 96 ảnh test cuộc thi gốc
-│   ├── ClinicalReadings/                   # Bệnh án lâm sàng bác sĩ
-│   ├── NLM-ChinaCXRSet-ReadMe.docx         # Tài liệu NIH
-│   └── NLM-MontgomeryCXRSet-ReadMe.pdf     # Tài liệu NIH
+Deep-Learning/
 ├── notebooks/
 │   └── lung_segmentation_colab.ipynb       # Notebook chính chạy trên Colab (đã kèm Output)
 ├── data_scaling_benchmark_results.csv       # Bảng số liệu thực nghiệm (Dice & IoU)
