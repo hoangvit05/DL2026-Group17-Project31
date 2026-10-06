@@ -119,3 +119,19 @@ Medical-Image-Segmentation-with-Limited-Training-Data/
 ├── .gitignore                              # Git exclusion rules for large datasets and caches
 └── README.md                               # Project documentation and comprehensive benchmark report
 ```
+
+---
+
+## 👥 7. Phân công công việc (Team Members & Task Assignment)
+
+Bảng phân công chi tiết vai trò, trách nhiệm và các mô-đun/tập tin do 7 thành viên trong nhóm đảm nhận:
+
+| STT | Họ và tên | Vai trò (Role) | Mô-đun & File đảm nhận | Nhiệm vụ chính & Đóng góp |
+| :-: | :--- | :--- | :--- | :--- |
+| 1 | **Đặng Việt Hoàng** *(Leader)* | Trưởng nhóm / Kiến trúc hệ thống | `.gitignore`, Quản trị kho lưu trữ, Setup Google Colab ban đầu | Lập kế hoạch dự án, phân chia công việc, khởi tạo Git repository, xây dựng notebook thực nghiệm mẫu ban đầu trên Google Colab và rà soát tiến độ nhóm. |
+| 2 | **Đào Trung Hiếu** | Kỹ sư Học sâu (Core Deep Learning) | `src/models.py`, `train.py`, `run_all.py`, Checkpoints logic | Xây dựng kiến trúc Vanilla U-Net & U-Net + ResNet-34 Encoder, thiết kế hàm mất mát tích hợp Hybrid Loss (BCE + Dice), xây dựng pipeline tự động hóa huấn luyện đầu-cuối (`run_all.py`), cơ chế lưu checkpoint mô hình. |
+| 3 | **Nguyễn Quang Thuần** | Kỹ sư Dữ liệu (Data Pipeline) | `src/dataset.py`, `DATA.md`, `splits/` (`splits/*.csv`) | Thu thập và tiền xử lý bộ dữ liệu Chest X-Ray (Montgomery & Shenzhen), xây dựng DataLoader kèm Fast In-Memory Caching, phân chia tập dữ liệu phân tầng ($10\%, 25\%, 50\%, 100\%$ và test cố định $20\%$), biên soạn `DATA.md`. |
+| 4 | **Nguyễn Đăng Hoàng** | Kỹ sư Đánh giá & Kiểm thử (Evaluation) | `src/metrics.py`, `evaluate.py` | Xây dựng mô-đun tính toán các chỉ số kiểm thử y tế (Dice Similarity Coefficient - DSC, mIoU / Jaccard Index), lập trình CLI đánh giá độc lập (`evaluate.py`), chuẩn hóa mã nguồn đánh giá. |
+| 5 | **Nguyễn Minh Đức** | Chuyên viên Thực nghiệm & Đo điểm chuẩn | `data_scaling_benchmark_results.csv`, Bảng số liệu benchmark | Thiết kế và thực thi kịch bản đo điểm chuẩn Data Scaling qua 4 mốc dữ liệu ($10\%, 25\%, 50\%, 100\%$), đo lường độ suy giảm hiệu năng, tổng hợp kết quả định lượng vào bảng dữ liệu so sánh. |
+| 6 | **Nguyễn Tú Oanh** | Phân tích Định tính & Trực quan hóa | `qualitative_comparison.png`, `data_scaling_comparison.png` | Xử lý hậu kỳ trực quan hóa phân vùng đa bệnh nhân (`qualitative_comparison.png`), phân tích định tính sự bảo toàn giải phẫu góc sườn hoành (costophrenic angles), vẽ biểu đồ đường cong Data Scaling (`data_scaling_comparison.png`). |
+| 7 | **Đào Minh Nguyệt** | Soạn thảo Tài liệu & Báo cáo Kỹ thuật | `README.md`, `INSTRUCTIONS.md`, `requirements.txt` | Soạn thảo và chuẩn hóa toàn bộ tài liệu kỹ thuật, hướng dẫn cài đặt và chạy thực nghiệm (`INSTRUCTIONS.md`), quản lý phụ thuộc thư viện (`requirements.txt`), biên dịch tiếng Anh học thuật cho báo cáo dự án. |
