@@ -62,8 +62,7 @@ From the remaining training pool of **480 cases (100%)**, nested subsets are hie
 
 | Split Name | Ratio (%) | Number of Images | Clinical Data Regime |
 | :--- | :---: | :---: | :--- |
-| `train_5pct.csv` | **5%** | **24** | Extreme Few-Shot Scenario (Severely constrained annotations) |
-| `train_10pct.csv` | **10%** | **48** | Constrained Annotation Scenario |
+| `train_10pct.csv` | **10%** | **48** | Constrained Annotation Scenario (Low-data regime) |
 | `train_25pct.csv` | **25%** | **120** | Low-to-Moderate Data Regime |
 | `train_50pct.csv` | **50%** | **240** | Moderate Data Regime |
 | `train_100pct.csv` | **100%** | **480** | Full Supervised Baseline |
@@ -82,7 +81,7 @@ From the remaining training pool of **480 cases (100%)**, nested subsets are hie
    * Standard Deviation: $[0.229, 0.224, 0.225]$
 
 ### 4.2. Data Augmentation (Albumentations Pipeline)
-To prevent severe overfitting under few-shot regimes ($5\%$ and $10\%$), the training pipeline applies:
+To prevent severe overfitting under constrained data regimes ($10\%$ and $25\%$), the training pipeline applies:
 * **Horizontal Flip:** Probability $p = 0.5$ (preserving anatomical symmetry).
 * **Random Affine Transformations:** Scale variation $\in [0.9, 1.1]$, rotation $\in [-15^{\circ}, 15^{\circ}]$, translation $\in [\pm 6.25\%]$ with $p = 0.5$.
 * **Photometric Perturbations:** Random brightness and contrast adjustment within $\pm 15\%$ ($p = 0.3$) to simulate scanner calibration variances.
@@ -119,10 +118,9 @@ Or execute directly from terminal:
 python -c "from src.dataset import prepare_splits; prepare_splits()"
 ```
 
-This generates all 7 split manifest CSV files inside `splits/`:
+This generates all 6 split manifest CSV files inside `splits/`:
 * `splits/test_fixed_20pct.csv`
 * `splits/val_fixed.csv`
-* `splits/train_5pct.csv`
 * `splits/train_10pct.csv`
 * `splits/train_25pct.csv`
 * `splits/train_50pct.csv`

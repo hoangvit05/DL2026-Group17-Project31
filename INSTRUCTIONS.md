@@ -8,8 +8,8 @@ This document provides comprehensive, step-by-step instructions to set up the en
 ## 🛠️ 1. Environment & Dependencies Setup
 
 ### 1.1. Hardware Recommendations
-* **Recommended Platform:** [Google Colab](https://colab.research.google.com/) with **GPU Tesla T4 (15GB VRAM)**.
-* **Local Setup:** NVIDIA GPU with $\ge 8\text{GB}$ VRAM, CUDA 11.8+, and Python 3.10+.
+* **Primary Platform:** Local workstation with NVIDIA GPU (e.g., RTX 3050 Laptop GPU, RTX 3060, or higher with CUDA 11.8+ / 12.x) or Cloud GPU (Google Colab / Kaggle).
+* **RAM & Storage:** $\ge 8\text{GB}$ RAM and $\approx 3\text{GB}$ available disk storage for raw CXR images and masks.
 
 ### 1.2. Dependencies Installation
 Install all required libraries specified in [requirements.txt](requirements.txt):
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 
 Core libraries include:
-* `torch` & `torchvision`: Deep learning framework and tensor operations.
+* `torch` & `torchvision`: Deep learning framework and tensor operations (CUDA enabled).
 * `segmentation-models-pytorch`: Pretrained segmentation architectures (ResNet-34 backbone).
 * `albumentations`: Medical image augmentation pipeline.
 * `opencv-python`: Image I/O and spatial processing.
@@ -43,14 +43,13 @@ kaggle datasets download -d nikhilpandey360/chest-xray-masks-and-labels --unzip
 ```
 
 ### 2.3. Dataset Partitioning
-The benchmark enforces a strict, reproducible data split:
+The benchmark enforces a strict, reproducible data split (`seed = 42`):
 * **Fixed Independent Test Set:** **$20\%$ (140 images)** held out for objective benchmarking.
-* **Fixed Validation Set:** **84 images** for model checkpointing and early stopping.
+* **Fixed Validation Set:** **84 images** for model checkpointing and tracking validation Dice.
 * **Nested Training Subsets:** Progressively restricted to simulate data scarcity:
-  * **5% Data:** 24 images
-  * **10% Data:** 48 images
-  * **25% Data:** 120 images
-  * **50% Data:** 240 images
+  * **10% Data:** 48 images (constrained annotation scenario)
+  * **25% Data:** 120 images (low-to-moderate data)
+  * **50% Data:** 240 images (moderate data)
   * **100% Data:** 480 images (full training split)
 
 ---
@@ -78,27 +77,28 @@ The benchmark enforces a strict, reproducible data split:
 
 ### 3.3. Training Execution
 
-#### Method A: Command-Line Interface (CLI Scripts)
-You can train specific model architectures under desired data subsets directly via terminal:
+#### Method A: Automated 1-Click Benchmark Pipeline (`run_all.py`) [Recommended]
+Executes all 8 benchmark configurations sequentially, uses in-memory RAM caching for maximum GPU throughput (~3-4 minutes total on an RTX 3050 Laptop GPU), and automatically produces the CSV results table and both visualization plots:
+
+```bash
+python run_all.py
+```
+
+#### Method B: Modular CLI Training (`train.py`)
+Train specific model architectures under desired data subsets directly via terminal:
 
 ```bash
 # Example 1: Train Pretrained U-Net (ResNet-34) on 10% data subset
 python train.py --model unet --encoder resnet34 --ratio 10 --epochs 25 --batch_size 8 --lr 3e-4
 
-# Example 2: Train Vanilla U-Net (from scratch) on 5% data subset
-python train.py --model vanilla_unet --ratio 5 --epochs 25 --batch_size 8 --lr 3e-4
+# Example 2: Train Vanilla U-Net (from scratch) on 25% data subset
+python train.py --model vanilla_unet --ratio 25 --epochs 25 --batch_size 8 --lr 3e-4
 
 # Example 3: Train Pretrained U-Net on full 100% data
 python train.py --model unet --encoder resnet34 --ratio 100 --epochs 25
 ```
 
 Model checkpoints will be automatically saved to `checkpoints/{model}_{ratio}pct.pth`.
-
-#### Method B: Google Colab Workflow
-All 10 experimental configurations can also be executed in one click:
-1. Open Google Colab and upload [`notebooks/lung_segmentation_colab.ipynb`](notebooks/lung_segmentation_colab.ipynb).
-2. Ensure GPU is activated: **Runtime** $\rightarrow$ **Change runtime type** $\rightarrow$ **T4 GPU** $\rightarrow$ **Save**.
-3. Run Section 7 & 8 in the notebook to benchmark all subsets sequentially.
 
 ---
 
@@ -123,11 +123,11 @@ The script prints the quantitative **Dice Similarity Coefficient (DSC)** and **I
 * **Mean Intersection over Union (mIoU / Jaccard Index)**:
   $$\text{IoU} = \frac{|P \cap G|}{|P \cup G|}$$
 
-All quantitative benchmark results across all 10 configurations are stored in:  
+All quantitative benchmark results across all 8 configurations (4 data regimes $\times$ 2 architectures) are stored in:  
 📁 [`data_scaling_benchmark_results.csv`](data_scaling_benchmark_results.csv)
 
-### 4.3. Visual & Qualitative Generation
-Run the visual reporting cells in the notebook to produce:
+### 4.3. Visual & Qualitative Reporting
+Visual artifacts are generated automatically via `run_all.py`:
 1. **`data_scaling_comparison.png`**: Multi-panel scaling curves comparing Dice and IoU across data regimes.
 2. **`qualitative_comparison.png`**: High-resolution comparative matrix displaying raw images, ground truths, and segmented predictions across all models.
 
@@ -137,7 +137,8 @@ Run the visual reporting cells in the notebook to produce:
 
 Verify that the following output artifacts have been properly generated after execution:
 
+- [x] `splits/` (6 dataset split manifests: `train_10pct.csv`, `train_25pct.csv`, `train_50pct.csv`, `train_100pct.csv`, `val_fixed.csv`, `test_fixed_20pct.csv`)
+- [x] `checkpoints/*.pth` (8 trained model weights across all ratios)
 - [x] `data_scaling_benchmark_results.csv` (Quantitative benchmark metrics)
 - [x] `data_scaling_comparison.png` (Data scaling curve figures)
 - [x] `qualitative_comparison.png` (Prediction visualization matrix)
-- [x] `checkpoints/*.pth` (Saved best model weights)

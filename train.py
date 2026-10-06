@@ -5,7 +5,7 @@ import torch.optim as optim
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from tqdm import tqdm
 
-from src.dataset import get_loader, prepare_splits
+from src.dataset import get_loader, get_fast_loader, prepare_splits
 from src.models import build_model
 from src.metrics import ComboLoss, compute_dice_iou
 
@@ -16,8 +16,8 @@ def parse_args():
                         help="Model architecture: 'unet' (Pretrained ResNet-34) or 'vanilla_unet' (From Scratch)")
     parser.add_argument("--encoder", type=str, default="resnet34",
                         help="Pretrained encoder backbone for SMP Unet (default: resnet34)")
-    parser.add_argument("--ratio", type=int, default=100, choices=[5, 10, 25, 50, 100],
-                        help="Training data subset proportion (percent): 5, 10, 25, 50, or 100")
+    parser.add_argument("--ratio", type=int, default=100, choices=[10, 25, 50, 100],
+                        help="Training data subset proportion (percent): 10, 25, 50, or 100")
     parser.add_argument("--epochs", type=int, default=25,
                         help="Number of training epochs (default: 25)")
     parser.add_argument("--batch_size", type=int, default=8,
@@ -34,6 +34,8 @@ def parse_args():
                         help="Directory to save trained model checkpoints")
     parser.add_argument("--num_workers", type=int, default=2,
                         help="DataLoader worker subprocesses")
+    parser.add_argument("--fast", action="store_true", default=True,
+                        help="Use in-memory fast cached DataLoader for high throughput (default: True)")
     return parser.parse_args()
 
 
@@ -52,12 +54,17 @@ def train(args):
         print(f"[Info] Split files not found in '{args.splits_dir}'. Generating splits...")
         prepare_splits(data_dir=args.data_dir, output_dir=args.splits_dir)
 
-    train_loader = get_loader(train_csv, img_size=args.img_size, batch_size=args.batch_size,
-                              is_train=True, num_workers=args.num_workers)
-    val_loader = get_loader(val_csv, img_size=args.img_size, batch_size=args.batch_size,
-                            is_train=False, num_workers=args.num_workers)
-    test_loader = get_loader(test_csv, img_size=args.img_size, batch_size=args.batch_size,
-                             is_train=False, num_workers=args.num_workers)
+    if args.fast:
+        train_loader = get_fast_loader(train_csv, img_size=args.img_size, batch_size=args.batch_size, is_train=True)
+        val_loader = get_fast_loader(val_csv, img_size=args.img_size, batch_size=args.batch_size, is_train=False)
+        test_loader = get_fast_loader(test_csv, img_size=args.img_size, batch_size=args.batch_size, is_train=False)
+    else:
+        train_loader = get_loader(train_csv, img_size=args.img_size, batch_size=args.batch_size,
+                                  is_train=True, num_workers=args.num_workers)
+        val_loader = get_loader(val_csv, img_size=args.img_size, batch_size=args.batch_size,
+                                is_train=False, num_workers=args.num_workers)
+        test_loader = get_loader(test_csv, img_size=args.img_size, batch_size=args.batch_size,
+                                 is_train=False, num_workers=args.num_workers)
 
     model = build_model(model_name=args.model, encoder=args.encoder).to(device)
     criterion = ComboLoss()
