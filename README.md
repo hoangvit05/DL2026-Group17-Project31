@@ -1,9 +1,9 @@
 # Medical Image Segmentation with Limited Training Data
-## Anatomical Lung Boundary Delineation on Chest X-Rays via Deep Learning (Google Colab)
+## Benchmark Case Study: Anatomical Lung Boundary Delineation on Chest X-Rays via Deep Learning (Google Colab)
 
 > **Course:** Deep Learning  
 > **Domain:** Computer Vision / Medical AI  
-> **Anatomical Target:** Both lungs (Left Lung & Right Lung) on Chest X-Rays (CXR)  
+> **Benchmark Dataset:** Chest X-Rays (Montgomery County & Shenzhen Hospital Datasets)  
 > **Primary Execution Environment:** **Google Colab (GPU Tesla T4 - 15GB VRAM)**  
 
 ---
@@ -50,7 +50,7 @@ The entire experimental workflow—data acquisition, preprocessing, training 10 
 Upon completing the notebook execution, the workflow automatically generates 3 primary artifacts:
 
 1. **`data_scaling_benchmark_results.csv`**: Comprehensive experimental table recording quantitative evaluation metrics (Test Dice Score and Test IoU) for both architectures (Vanilla U-Net & Pretrained U-Net) across all 5 training subsets ($5\%, 10\%, 25\%, 50\%, 100\%$).
-2. **`data_scaling_comparison.png`**: Scientific visualization (Data Scaling Curves) illustrating the relationship between training sample scale and Test Dice Score.
+2. **`data_scaling_comparison.png`**: Scientific visualization (4-Panel Data Scaling Curves) illustrating the relationship between training sample scale, Test Dice Score, and Test IoU across full scale ($0\% - 100\%$) and zoomed scale ($80\% - 100\%$).
 3. **`qualitative_comparison.png`**: High-resolution comparative matrix (10 rows × 7 columns) displaying side-by-side visual segmentation results across raw CXRs, ground truth annotations, and model predictions under varying data scales.
 
 ---
@@ -88,23 +88,23 @@ All evaluations were conducted on the identical, independent test set of **140 i
 
 | Training Data Scale (Images) | Model Architecture | Test Dice Score (%) | Test IoU (%) | Delta (Pretrained vs Scratch) |
 | :--- | :--- | :---: | :---: | :---: |
-| **5% (24 images - Few-shot)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **94.72%**<br>94.41% | **90.08%**<br>89.57% | **+0.31% Dice** \| **+0.51% IoU** |
-| **10% (48 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **95.71%**<br>94.67% | **91.87%**<br>90.05% | **+1.04% Dice** \| **+1.82% IoU** |
-| **25% (120 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.02%**<br>95.53% | **92.45%**<br>91.55% | **+0.49% Dice** \| **+0.90% IoU** |
-| **50% (240 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.04%**<br>95.98% | **92.50%**<br>92.38% | **+0.06% Dice** \| **+0.12% IoU** |
-| **100% (480 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | 96.15%<br>**96.22%** | 92.70%<br>**92.82%** | Near Parity Saturation (~96.2%) |
+| **5% (24 images - Few-shot)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **94.88%**<br>94.23% | **90.34%**<br>89.19% | **+0.65% Dice** \| **+1.15% IoU** |
+| **10% (48 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **95.74%**<br>94.80% | **91.92%**<br>90.22% | **+0.94% Dice** \| **+1.70% IoU** |
+| **25% (120 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.19%**<br>95.64% | **92.77%**<br>91.74% | **+0.55% Dice** \| **+1.03% IoU** |
+| **50% (240 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | **96.45%**<br>96.13% | **93.26%**<br>92.66% | **+0.32% Dice** \| **+0.60% IoU** |
+| **100% (480 images)** | **Pretrained U-Net (ResNet-34)**<br>Vanilla U-Net (From Scratch) | 96.44%<br>**96.49%** | 93.24%<br>**93.33%** | Near Parity Saturation (~96.5%) |
 
 ### 5.2. Data Scaling Performance Curves
-
-![Data Scaling Curves: Training Data Ratio vs Test Dice Score](data_scaling_comparison.png)
+ 
+![Data Scaling Curves: Training Data Ratio vs Test Dice Score and Test IoU](data_scaling_comparison.png)
 
 ### 5.3. Qualitative Segmentation Predictions
 
 ![Qualitative segmentation comparison across models and data scales](qualitative_comparison.png)
 
 ### 5.4. Key Scientific Findings
-1. **Decisive Transfer Learning Advantage Under Data Scarcity:** When training data drops to $10\%$ (48 images), Pretrained U-Net significantly outperforms Vanilla U-Net (+**1.04%** Dice, +**1.82%** IoU).
-2. **Clinical Annotation Burden Reduction:** Pretrained U-Net reaches **95.71%** Dice with merely **48 images (10%)**, outperforming Vanilla U-Net trained on **120 images (25% - 95.53%)**. This confirms that Transfer Learning cuts radiologist annotation requirements by more than half while sustaining superior accuracy.
+1. **Decisive Transfer Learning Advantage Under Data Scarcity:** When training data drops to $10\%$ (48 images), Pretrained U-Net significantly outperforms Vanilla U-Net (+**0.94%** Dice, +**1.70%** IoU), and maintains a clear lead at the extreme $5\%$ data scale (+**0.65%** Dice, +**1.15%** IoU).
+2. **Clinical Annotation Burden Reduction:** Pretrained U-Net reaches **95.74%** Dice with merely **48 images (10%)**, outperforming Vanilla U-Net trained on **120 images (25% - 95.64%)**. This confirms that Transfer Learning cuts radiologist annotation requirements by more than half while sustaining superior accuracy.
 3. **Anatomical Boundary Integrity:** Visual inspections reveal that under extreme data constraints (5% data, 24 images), Vanilla U-Net generates jagged boundaries and boundary dropouts at the costophrenic angles. In contrast, Pretrained U-Net maintains smooth, anatomically faithful contours across both normal lungs and complex pathological lesions (such as tuberculosis and pleurisy).
 
 ---
