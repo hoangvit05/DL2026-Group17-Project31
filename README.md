@@ -1,6 +1,8 @@
 # Medical Image Segmentation with Limited Training Data
 ## Benchmark Case Study: Anatomical Lung Boundary Delineation on Chest X-Rays via Deep Learning (Google Colab)
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/hoangvit05/Medical-Image-Segmentation-with-Limited-Training-Data/blob/main/notebooks/lung_segmentation_colab.ipynb)
+
 > **Course:** Deep Learning  
 > **Domain:** Computer Vision / Medical AI  
 > **Benchmark Dataset:** Chest X-Rays (Montgomery County & Shenzhen Hospital Datasets)  
@@ -31,27 +33,16 @@ The project employs the clinical benchmark dataset **Chest X-Ray Masks and Label
   * **Montgomery County Set (USA):** 138 cases (138 CXR images + 138 paired lung masks).
   * **Shenzhen Hospital Set (China):** 566 cases with complete lung masks.
 
+👉 Detailed dataset specifications, download links, stratified splits, and data reproduction instructions are fully documented in:  
+**[`DATA.md`](DATA.md)**
+
 ---
 
-## 🚀 3. Execution Guide on Google Colab
+## 🚀 3. Training & Evaluation Guide
 
-The entire experimental workflow—data acquisition, preprocessing, training 10 comparative models, and generating publication-ready figures—is fully encapsulated in **a single Jupyter Notebook**:
+Detailed instructions on environment setup, dataset downloading, model training, and evaluation are documented in:
 
-📁 **[`notebooks/lung_segmentation_colab.ipynb`](notebooks/lung_segmentation_colab.ipynb)**
-
-### Colab Execution Steps:
-
-1. **Open Colab:** Navigate to [colab.research.google.com](https://colab.research.google.com/) → Select the **Upload** tab → Upload [`notebooks/lung_segmentation_colab.ipynb`](notebooks/lung_segmentation_colab.ipynb).
-2. **Enable GPU Accelerator:** Go to **Runtime** → **Change runtime type** → Select **T4 GPU** → Click **Save**.
-3. **Run All Cells:** Click **Runtime** → **Run all** (or press `Ctrl + F9`).
-
-### 📂 Core Output Artifacts Generated:
-
-Upon completing the notebook execution, the workflow automatically generates 3 primary artifacts:
-
-1. **`data_scaling_benchmark_results.csv`**: Comprehensive experimental table recording quantitative evaluation metrics (Test Dice Score and Test IoU) for both architectures (Vanilla U-Net & Pretrained U-Net) across all 5 training subsets ($5\%, 10\%, 25\%, 50\%, 100\%$).
-2. **`data_scaling_comparison.png`**: Scientific visualization (4-Panel Data Scaling Curves) illustrating the relationship between training sample scale, Test Dice Score, and Test IoU across full scale ($0\% - 100\%$) and zoomed scale ($80\% - 100\%$).
-3. **`qualitative_comparison.png`**: High-resolution comparative matrix (10 rows × 7 columns) displaying side-by-side visual segmentation results across raw CXRs, ground truth annotations, and model predictions under varying data scales.
+👉 **[`INSTRUCTIONS.md`](INSTRUCTIONS.md)** (Contains full instructions for hardware setup, dependencies, training loops, evaluation metrics, and artifact reproduction).
 
 ---
 
@@ -113,11 +104,22 @@ All evaluations were conducted on the identical, independent test set of **140 i
 
 ```text
 Medical-Image-Segmentation-with-Limited-Training-Data/
+├── src/
+│   ├── dataset.py                          # Dataset loader, transforms, and split generator
+│   ├── models.py                           # Vanilla U-Net and Pretrained ResNet-34 U-Net
+│   ├── metrics.py                          # Compound loss (BCE + Dice) and evaluation metrics
+│   └── __init__.py                         # Package initialization
 ├── notebooks/
 │   └── lung_segmentation_colab.ipynb       # Main executable Google Colab notebook (with outputs)
+├── splits/                                 # Stratified dataset split manifests (*.csv)
+├── train.py                                # Standalone CLI training script
+├── evaluate.py                             # Standalone CLI evaluation script
 ├── data_scaling_benchmark_results.csv       # Experimental benchmark metrics (Dice & IoU)
 ├── data_scaling_comparison.png             # Scientific data scaling curve visualization
 ├── qualitative_comparison.png              # Multi-patient qualitative prediction matrix
+├── requirements.txt                        # Python dependencies and package specifications
+├── INSTRUCTIONS.md                         # Detailed training and evaluation execution instructions
+├── DATA.md                                 # Official dataset documentation and reproduction guide
 ├── .gitignore                              # Git exclusion rules for large datasets and caches
 └── README.md                               # Project documentation and comprehensive benchmark report
 ```
