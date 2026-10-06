@@ -1,0 +1,25 @@
+filename,dataset,image_path,mask_path
+CHNCXR_0250_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0250_0.png,Lung Segmentation/masks/CHNCXR_0250_0_mask.png
+MCUCXR_0080_0.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0080_0.png,Lung Segmentation/masks/MCUCXR_0080_0.png
+CHNCXR_0046_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0046_0.png,Lung Segmentation/masks/CHNCXR_0046_0_mask.png
+CHNCXR_0259_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0259_0.png,Lung Segmentation/masks/CHNCXR_0259_0_mask.png
+CHNCXR_0576_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0576_1.png,Lung Segmentation/masks/CHNCXR_0576_1_mask.png
+CHNCXR_0525_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0525_1.png,Lung Segmentation/masks/CHNCXR_0525_1_mask.png
+CHNCXR_0386_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0386_1.png,Lung Segmentation/masks/CHNCXR_0386_1_mask.png
+CHNCXR_0631_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0631_1.png,Lung Segmentation/masks/CHNCXR_0631_1_mask.png
+MCUCXR_0390_1.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0390_1.png,Lung Segmentation/masks/MCUCXR_0390_1.png
+CHNCXR_0091_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0091_0.png,Lung Segmentation/masks/CHNCXR_0091_0_mask.png
+MCUCXR_0074_0.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0074_0.png,Lung Segmentation/masks/MCUCXR_0074_0.png
+CHNCXR_0069_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0069_0.png,Lung Segmentation/masks/CHNCXR_0069_0_mask.png
+MCUCXR_0083_0.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0083_0.png,Lung Segmentation/masks/MCUCXR_0083_0.png
+MCUCXR_0195_1.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0195_1.png,Lung Segmentation/masks/MCUCXR_0195_1.png
+MCUCXR_0002_0.png,Montgomery,Lung Segmentation/CXR_png/MCUCXR_0002_0.png,Lung Segmentation/masks/MCUCXR_0002_0.png
+CHNCXR_0515_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0515_1.png,Lung Segmentation/masks/CHNCXR_0515_1_mask.png
+CHNCXR_0321_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0321_0.png,Lung Segmentation/masks/CHNCXR_0321_0_mask.png
+CHNCXR_0510_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0510_1.png,Lung Segmentation/masks/CHNCXR_0510_1_mask.png
+CHNCXR_0383_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0383_1.png,Lung Segmentation/masks/CHNCXR_0383_1_mask.png
+CHNCXR_0603_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0603_1.png,Lung Segmentation/masks/CHNCXR_0603_1_mask.png
+CHNCXR_0332_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0332_1.png,Lung Segmentation/masks/CHNCXR_0332_1_mask.png
+CHNCXR_0656_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0656_1.png,Lung Segmentation/masks/CHNCXR_0656_1_mask.png
+CHNCXR_0655_1.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0655_1.png,Lung Segmentation/masks/CHNCXR_0655_1_mask.png
+CHNCXR_0265_0.png,Shenzhen,Lung Segmentation/CXR_png/CHNCXR_0265_0.png,Lung Segmentation/masks/CHNCXR_0265_0_mask.png
